@@ -82,11 +82,11 @@ void main() async {
     logger.info('setup RTCTransformEvent event handler');
     self.onrtctransform = (web.RTCTransformEvent event) {
       logger.info('Got onrtctransform event');
-      var transformer = (event as RTCTransformEvent).transformer;
+      var transformer = event.transformer;
 
       transformer.handled = true;
 
-      var options = transformer.options;
+      var options = transformer.options.dartify()!;
       var kind = js_util.getProperty(options, 'kind');
       var participantId = js_util.getProperty(options, 'participantId');
       var trackId = js_util.getProperty(options, 'trackId');
@@ -190,8 +190,8 @@ void main() async {
             var exist = msg['exist'] as bool;
             var participantId = msg['participantId'] as String;
             var trackId = msg['trackId'];
-            var readable = msg['readableStream'] as ReadableStream;
-            var writable = msg['writableStream'] as WritableStream;
+            var readable = msg['readableStream'] as web.ReadableStream;
+            var writable = msg['writableStream'] as web.WritableStream;
             var keyProviderId = msg['keyProviderId'] as String;
 
             logger.config(
